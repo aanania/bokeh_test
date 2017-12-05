@@ -24,6 +24,7 @@ RUN yum -y --enablerepo=extras install epel-release \
   gnome-terminal \
   mariadb \
   mariadb-server \
+  mysql-devel \
   nano && \
   yum clean all
 
@@ -31,12 +32,15 @@ RUN yum groupinstall -y "Development Tools" "Development Libraries" && \
   yum clean all
 
 # install python3
-RUN wget ftp://ftp.noao.edu/pub/dmills/python3-to-install.tgz
+COPY python3-to-install.tgz .
 RUN tar -zxvf python3-to-install.tgz && rm python3-to-install.tgz
 RUN cd Python-3.6.3 && make install
 
-COPY ./requirements.txt /home/docker/lsst/LSST-server/requirements.txt
-RUN pip3 install -r /home/docker/lsst/LSST-server/requirements.txt
+COPY ./requirements.txt /home/docker/requirements.txt
+RUN pip3 install -r /home/docker/requirements.txt
+
+WORKDIR "/home/docker/"
+RUN git clone https://github.com/aanania/bokeh_test.git
 
 COPY run.sh /home/docker/lsst/run.sh
 
