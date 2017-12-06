@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 # Load the Iris Data Set
 feature_names = ["Histogram"]
+local_ip = "139.229.136.31"
 
 # Create the main plot
 def create_figure():
@@ -38,7 +39,7 @@ def create_figure():
 	return p1
 
 def queryData(query):
-	db = MySQLdb.connect(host="localhost",    # your host, usually localhost
+	db = MySQLdb.connect(host=local_ip,    # your host, usually localhost
 		             user="efduser",         # your username
 		             passwd="lssttest",  # your password
 		             db="EFD")        # name of the data base
@@ -68,4 +69,4 @@ def index():
 # With debug=True, Flask server will auto-reload 
 # when there are code changes
 if __name__ == '__main__':
-	app.run(host= '0.0.0.0', port=80, debug=True)
+	app.run(host= local_ip, port=80, debug=True)
