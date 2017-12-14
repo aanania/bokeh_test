@@ -28,7 +28,7 @@ def create_figure():
 	x2 = data2CMD['date']
 	y2 = data2CMD['position']
 
-	p1.line(x1, y1, line_color="blue", line_width=2, alspha=1, legend="Position")
+	p1.line(x1, y1, line_color="blue", line_width=2, alpha=1, legend="Position")
 	p1.line(x2, y2, line_color="red", line_width=2, alpha=1, legend="Position CMD")
 
 	p1.legend.location = "center_right"
