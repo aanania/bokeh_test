@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 from bokeh.plotting import figure, show, output_file
 from bokeh.embed import components
+from datetime import datetime as dt
+from bokeh.models import DatetimeTickFormatter
+
 import MySQLdb
 
 app = Flask(__name__)
@@ -20,16 +23,18 @@ def create_figure():
 		     ('date', '<M8[us]')]
 	data2 = np.fromiter(data, count=-1, dtype=data_type)
 	data2CMD = np.fromiter(dataCMD, count=-1, dtype=data_type)
-	p1 = figure(title="Rotator position")
+	p1 = figure(title="Rotator position", x_axis_type='datetime')
 
 	x1 = data2['date']
 	y1 = data2['position']
-
+	#print(x1)
 	x2 = data2CMD['date']
 	y2 = data2CMD['position']
 
 	p1.line(x1, y1, line_color="blue", line_width=2, alpha=1, legend="Position")
 	p1.line(x2, y2, line_color="red", line_width=2, alpha=1, legend="Position CMD")
+	
+	#p1.xaxis.formatter=DatetimeTickFormatter(hours=["%d %B %Y"],days=["%d %B %Y"],months=["%d %B %Y"],years=["%d %B %Y"],)
 
 	p1.legend.location = "center_right"
 	p1.legend.background_fill_color = "darkgrey"
