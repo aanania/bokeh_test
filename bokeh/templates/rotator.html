@@ -12,7 +12,8 @@
 
 <script type="text/javascript" src="static/js/jquery-3.2.1.min.js"></script> 
 <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="static/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="sta
+tic/js/bootstrap-datetimepicker.min.js"></script>
 <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.11.min.js"></script>
 <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.11.min.js"></script>
 
@@ -20,26 +21,42 @@
 <body>
 <H1>Rotator Plot</H1>
 
-<form action="/">
-<select name="feature_name">
-	{% for feature in feature_names %}
-		{% if feature == current_feature_name %}
-			<option selected value="{{ feature }}">{{ feature }}</option> 
-		{% else %} 
-			<option value="{{ feature }}">{{ feature }}</option> 
-		{% endif %}
-	{% endfor %}
-</select>
-<input type="submit">
+<form action="/" method="post">
+	<div>
+	<select name="feature_name">
+			{% for feature in feature_names %}
+				{% if feature == current_feature_name %}
+					<option selected value="{{ feature }}">{{ feature }}</option> 
+				{% else %} 
+					<option value="{{ feature }}">{{ feature }}</option> 
+				{% endif %}
+			{% endfor %}
+	</select>
+	</div>
+
+	Initial Date
+	<div id="initial_date" class="input-append date">
+		<input type="text" name="initial_date"></input>
+		<span class="add-on">
+			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+		</span>
+	</div>
+	<script type="text/javascript">  
+		$('#initial_date').datetimepicker({format: 'yyyy-MM-dd hh:mm:ss'}); 
+	</script>
+
+	End Date
+	<div id="end_date" class="input-append date">
+		<input type="text" name="end_date"></input>
+		<span class="add-on">
+			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+		</span>
+	</div>
+	<script type="text/javascript">  $('#end_date').datetimepicker({format: 'yyyy-MM-dd hh:mm:ss'}); </script>
+	<div></div>
+	<input type="submit">
 </form>
 
-<div id="datetimepicker" class="input-append date">
-	<input type="text"></input>
-	<span class="add-on">
-		<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-	</span>
-</div>
-<script type="text/javascript">  $('#datetimepicker').datetimepicker({format: 'dd/MM/yyyy hh:mm:ss'}); </script>
 
 {{ script|safe }}
 {{ div|safe }}
