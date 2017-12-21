@@ -12,14 +12,13 @@
 
 <script type="text/javascript" src="static/js/jquery-3.2.1.min.js"></script> 
 <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="sta
-tic/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap-datetimepicker.min.js"></script>
 <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.11.min.js"></script>
 <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.11.min.js"></script>
 
 </head>
 <body>
-<H1>Rotator Plot</H1>
+<H1>Rotator Test</H1>
 
 <form action="/" method="post">
 	<div>
@@ -55,12 +54,18 @@ tic/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript">  $('#end_date').datetimepicker({format: 'yyyy-MM-dd hh:mm:ss'}); </script>
 	<div></div>
 	<input type="submit">
+	{% if above_limit == True %}
+		<div class="alert alert-danger"> Test Failed: Upper limit reached...</div>
+	{% else %}
+		<div class="alert alert-success"> Test Passed: All good...</div>
+	{% endif %}
+	
 </form>
-
 
 {{ script|safe }}
 {{ div|safe }}
 
+</div>
 
 </body>
 </html>

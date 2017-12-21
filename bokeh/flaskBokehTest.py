@@ -40,6 +40,11 @@ def create_figure(initial_date, end_date):
 	x2 = data2CMD['date']
 	y2 = data2CMD['position']
 
+	if(np.size(y1)>0):
+		above_limit = (y1.max() > angle_limit)
+	else:
+		above_limit = False
+
 	#index_greater_pos =  np.where(y1 > angle_limit)
 	#index_greater_cmd =  np.where(y2 > angle_limit)
 	#index_smaller_pos =  np.where(y1 < angle_limit)
@@ -71,7 +76,7 @@ def create_figure(initial_date, end_date):
 	p1.xaxis.axis_label = 'Date'
 	p1.yaxis.axis_label = 'Position in degrees'
 
-	return p1
+	return p1, above_limit
 
 def queryData(query):
 	db = MySQLdb.connect(host=local_ip,    # your host, usually localhost
@@ -101,16 +106,14 @@ def index():
 		initial_date = datetime.datetime.now() 
 		end_date = datetime.datetime.now()
 
-	plot = create_figure(initial_date, end_date)
+	plot, above_limit = create_figure(initial_date, end_date)
 	if current_feature_name == None:
 		current_feature_name = "Angle_check"
 
-
-		
 	# Embed plot into HTML via Flask Render
 	script, div = components(plot)
 	return render_template("rotator.html", script=script, div=div,
-		feature_names=feature_names,  current_feature_name=current_feature_name)
+		feature_names=feature_names,  current_feature_name=current_feature_name, above_limit=above_limit)
 
 # With debug=True, Flask server will auto-reload 
 # when there are code changes
