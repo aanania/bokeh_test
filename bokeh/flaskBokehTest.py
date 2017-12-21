@@ -5,7 +5,7 @@ from bokeh.plotting import figure, show, output_file
 from bokeh.embed import components
 from datetime import datetime as dt
 from bokeh.models import DatetimeTickFormatter
-
+import datetime
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, DateField
 
 import MySQLdb
@@ -55,8 +55,10 @@ def create_figure(initial_date, end_date):
 	p1.line( x1, y1, color="blue", line_width=2, alpha=0.5 , legend="Position")
 	p1.line( x2, y2, color="green", line_width=2, alpha=0.5, legend="Position CMD")
 
-	p1.line( [x1[0], x1[-1]], [angle_limit, angle_limit], line_color="red", line_width=1, alpha=0.5)
-
+	try:
+		p1.line( [x1[0], x1[-1]], [angle_limit, angle_limit], line_color="red", line_width=1, alpha=0.5, legend="Upper limit")
+	except:
+		print("No data")
 	#p1.line( x1[index_greater_pos], y1[index_greater_pos], line_color="red", line_width=2, alpha=1, legend="Position out of limit")
 	#p1.line( x2[index_greater_cmd], y2[index_greater_cmd], line_color="brown", line_width=2, alpha=1, legend="Cmd out of limit")
 
@@ -96,8 +98,8 @@ def index():
 		print(initial_date)
 		print(end_date)
 	else:
-		initial_date = 0 
-		end_date = 0 
+		initial_date = datetime.datetime.now() 
+		end_date = datetime.datetime.now()
 
 	plot = create_figure(initial_date, end_date)
 	if current_feature_name == None:
